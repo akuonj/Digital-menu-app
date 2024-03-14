@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FMS</string>
+    <string name="placeholder_item">Select an option</string>
+
+
+    <string-array name="menu_items">
+        <item>@string/placeholder_item</item>
+        <item>Make Order</item>
+    </string-array>
+</resources>

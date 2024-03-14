@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/myfood">
+
+
+    <TextView
+        android:id="@+id/tvActions"
+        android:layout_width="417dp"
+        android:layout_height="105dp"
+        android:background="@drawable/buttons"
+        android:paddingLeft="5dp"
+        android:paddingTop="20dp"
+        android:paddingRight="5dp"
+        android:text="AVAILABLE ACTIONS"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/textViewRegisterLink"
+        android:layout_width="122dp"
+        android:layout_height="53dp"
+        android:layout_below="@id/tvActions"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="145dp"
+        android:background="@drawable/buttons"
+        android:text="ADD TABLE"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvActions" />
+
+    <Button
+        android:id="@+id/btnPendingOrders"
+        android:layout_width="127dp"
+        android:layout_height="54dp"
+        android:layout_below="@id/textViewRegisterLink"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="142dp"
+        android:background="@drawable/buttons"
+        android:text="PENDING ORDERS"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRegisterLink" />
+
+    <Button
+        android:id="@+id/btnServedOrders"
+        android:layout_width="127dp"
+        android:layout_height="54dp"
+        android:layout_below="@id/textViewRegisterLink"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="140dp"
+        android:background="@drawable/buttons"
+        android:text="SERVED ORDERS"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPendingOrders" />
+</androidx.constraintlayout.widget.ConstraintLayout>
