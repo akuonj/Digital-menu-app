@@ -1,8 +1,6 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.Manifest;
 import android.telephony.SmsManager;
 
 public class SmsSender {

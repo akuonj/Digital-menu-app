@@ -1,4 +1,4 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import org.junit.Test;
 

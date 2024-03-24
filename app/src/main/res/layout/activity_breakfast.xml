@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/tvBreakfast"
-        android:layout_width="416dp"
-        android:layout_height="107dp"
+        android:layout_width="417dp"
+        android:layout_height="97dp"
         android:background="@drawable/buttons"
         android:paddingTop="20dp"
         android:text="BREAKFAST"
@@ -73,30 +73,26 @@
         android:id="@+id/btbfOk"
         android:layout_width="100dp"
         android:layout_height="44dp"
-        android:layout_marginStart="165dp"
-        android:layout_marginEnd="146dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="153dp"
+        android:layout_marginEnd="158dp"
         android:background="@drawable/buttons"
         android:text="OK"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <AutoCompleteTextView
         android:id="@+id/etbfFruit"
         android:layout_width="234dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="3dp"
         android:ems="10"
         android:focusable="false"
         android:hint="Choose a fruit"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvbfFruit"
         app:layout_constraintTop_toBottomOf="@+id/tvBreakfast" />
 
@@ -147,14 +143,12 @@
         android:id="@+id/etbfSpreads"
         android:layout_width="234dp"
         android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="26dp"
         android:ems="10"
         android:focusable="false"
         android:hint="Choose a spread"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tvbfSpreads"
         app:layout_constraintTop_toBottomOf="@+id/etbfMeat" />
 </androidx.constraintlayout.widget.ConstraintLayout>

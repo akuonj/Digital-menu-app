@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FMS</string>
-    <string name="placeholder_item">Select an option</string>
+    <string name="placeholder_item"> Select an option </string>
 
 
     <string-array name="menu_items">

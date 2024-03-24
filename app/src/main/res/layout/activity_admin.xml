@@ -29,46 +29,37 @@
 
     <Button
         android:id="@+id/textViewRegisterLink"
-        android:layout_width="122dp"
-        android:layout_height="53dp"
+        android:layout_width="127dp"
+        android:layout_height="40dp"
         android:layout_below="@id/tvActions"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="145dp"
         android:background="@drawable/buttons"
-        android:text="ADD TABLE"
+        android:text="NEW TABLE"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvActions" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnPendingOrders"
-        android:layout_width="127dp"
-        android:layout_height="54dp"
+        android:layout_width="174dp"
+        android:layout_height="41dp"
         android:layout_below="@id/textViewRegisterLink"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="142dp"
+        android:layout_marginStart="1dp"
         android:background="@drawable/buttons"
         android:text="PENDING ORDERS"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRegisterLink" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnServedOrders"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/textViewRegisterLink" />
 
     <Button
         android:id="@+id/btnServedOrders"
-        android:layout_width="127dp"
-        android:layout_height="54dp"
+        android:layout_width="159dp"
+        android:layout_height="41dp"
         android:layout_below="@id/textViewRegisterLink"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="140dp"
         android:background="@drawable/buttons"
         android:text="SERVED ORDERS"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPendingOrders" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

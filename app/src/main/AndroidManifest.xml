@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HOSPITALFOOD"
         tools:targetApi="31">
-        <receiver android:name=".SmsReceiver"
+        <receiver android:name="com.example.fms.SmsReceiver"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
@@ -31,7 +31,7 @@
 
 
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.fms.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,17 +40,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SelectMealActivity"></activity>
-        <activity android:name=".BreakfastActivity"></activity>
-        <activity android:name=".LunchActivity"></activity>
-        <activity android:name=".DinnerActivity"></activity>
-        <activity android:name=".ViewOrderActivity"></activity>
-        <activity android:name=".OrderActivity"></activity>
-        <activity android:name=".DeletedActivity"></activity>
-        <activity android:name=".WelcomeActivity"></activity>
-        <activity android:name=".RegistrationActivity"></activity>
-        <activity android:name=".AdminActivity"></activity>
-        <activity android:name=".WaitActivity"></activity>
+        <activity android:name="com.example.fms.SelectMealActivity"></activity>
+        <activity android:name="com.example.fms.BreakfastActivity"></activity>
+        <activity android:name="com.example.fms.LunchActivity"></activity>
+        <activity android:name="com.example.fms.DinnerActivity"></activity>
+        <activity android:name="com.example.fms.ViewOrderActivity"></activity>
+        <activity android:name="com.example.fms.PendingOrderActivity"></activity>
+        <activity android:name="com.example.fms.ServedBreakfastActivity"></activity>
+        <activity android:name="com.example.fms.WelcomeActivity"></activity>
+        <activity android:name="com.example.fms.RegistrationActivity"></activity>
+        <activity android:name="com.example.fms.AdminActivity"></activity>
+        <activity android:name="com.example.fms.WaitActivity"></activity>
 
     </application>
 

@@ -1,7 +1,6 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,7 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DeletedActivity extends Activity {
+import com.example.hospitalfood.R;
+
+public class ServedBreakfastActivity extends Activity {
     TextView breakfastFruitTextView, breakfastCerealTextView, breakfastStarchTextView, breakfastMeatTextView, breakfastSpreadsTextView;
 
     // Cursors for patient and breakfast data
@@ -20,7 +21,7 @@ public class DeletedActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_deleted);
+        setContentView(R.layout.activity_served_breakfast_orders);
 
         // Initialize TextViews
         breakfastFruitTextView = findViewById(R.id.breakfastFruitTextView);
@@ -39,7 +40,7 @@ public class DeletedActivity extends Activity {
                     currentRecordIndex++;
                     showDataForCurrentIndex();
                 } else {
-                    Toast.makeText(DeletedActivity.this, "No records found!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ServedBreakfastActivity.this, "No records found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -78,14 +79,14 @@ public class DeletedActivity extends Activity {
                     currentRecordIndex--;
                     showDataForCurrentIndex();
                 } else {
-                    Toast.makeText(DeletedActivity.this, "No records found!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ServedBreakfastActivity.this, "No records found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
         if (deletedCursor.getCount() == 0) {
-            Toast.makeText(DeletedActivity.this, "No seved orders found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ServedBreakfastActivity.this, "No seved orders found.", Toast.LENGTH_SHORT).show();
         } else {
             showDataForCurrentIndex();
         }
@@ -119,11 +120,11 @@ public class DeletedActivity extends Activity {
                 breakfastSpreadsTextView.setText("Spreads:  " + breakfastSpreads);
             } else {
                 // Handle the case where the cursor position is invalid
-                Toast.makeText(DeletedActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServedBreakfastActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
             }
         } else {
             // Handle the case where there is no data in the cursor
-            Toast.makeText(DeletedActivity.this, "No data in the cursor", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ServedBreakfastActivity.this, "No data in the cursor", Toast.LENGTH_SHORT).show();
         }
     }
 }

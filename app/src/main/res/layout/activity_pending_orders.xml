@@ -12,10 +12,10 @@
         android:layout_height="90dp"
         android:background="@drawable/buttons"
         android:paddingTop="20dp"
-        android:text="SELECT AN ORDER TO VIEW"
+        android:text="PENDING ORDERS"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="28dp"
+        android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,42 +23,34 @@
 
     <Button
         android:id="@+id/btnViewbreakfastOrders"
-        android:layout_width="128dp"
+        android:layout_width="136dp"
         android:layout_height="47dp"
-        android:layout_marginStart="154dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="129dp"
-        android:layout_marginBottom="24dp"
         android:background="@drawable/buttons"
         android:text="BREAKFAST"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btnViewLunchOrders"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOrders" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnViewLunchOrders"
-        android:layout_width="126dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="157dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="1dp"
         android:background="@drawable/buttons"
         android:text="LUNCH"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/btnViewbreakfastOrders"
-        app:layout_constraintStart_toStartOf="@+id/btnViewbreakfastOrders"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewbreakfastOrders" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnViewDinnerOrders"
+        app:layout_constraintStart_toEndOf="@+id/btnViewbreakfastOrders" />
 
     <Button
         android:id="@+id/btnViewDinnerOrders"
-        android:layout_width="126dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="139dp"
+        android:layout_height="46dp"
         android:background="@drawable/buttons"
         android:text="DINNER"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/btnViewLunchOrders"
-        app:layout_constraintStart_toStartOf="@+id/btnViewLunchOrders"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewLunchOrders" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

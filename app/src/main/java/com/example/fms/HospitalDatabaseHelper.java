@@ -1,4 +1,4 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.content.ContentValues;
 import android.content.Context;

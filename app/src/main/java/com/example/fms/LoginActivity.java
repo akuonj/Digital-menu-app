@@ -1,4 +1,4 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.hospitalfood.R;
 
 public class LoginActivity extends Activity {
     private EditText editTextUsername;

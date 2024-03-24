@@ -1,10 +1,12 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.hospitalfood.R;
 
 
 public class AdminActivity extends Activity {
@@ -30,7 +32,7 @@ public class AdminActivity extends Activity {
         btnPendingOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, OrderActivity.class);
+                Intent intent = new Intent(AdminActivity.this, PendingOrderActivity.class);
                 startActivity(intent);
             }
         });
@@ -38,7 +40,7 @@ public class AdminActivity extends Activity {
         btnServedOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, DeletedActivity.class);
+                Intent intent = new Intent(AdminActivity.this, ServedBreakfastActivity.class);
                 startActivity(intent);
             }
         });

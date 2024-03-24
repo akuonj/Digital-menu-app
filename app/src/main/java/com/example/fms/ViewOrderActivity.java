@@ -1,4 +1,4 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.hospitalfood.R;
 
 public class ViewOrderActivity extends Activity {
     // TextViews to display breakfast data
@@ -21,7 +23,7 @@ public class ViewOrderActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_order);
+        setContentView(R.layout.activity_pending_breakfast_orders);
 
         // Initialize TextViews
         breakfastFruitTextView = findViewById(R.id.breakfastFruitTextView);

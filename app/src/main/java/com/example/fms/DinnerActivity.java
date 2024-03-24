@@ -1,4 +1,4 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
+
+import com.example.hospitalfood.R;
 
 
 public class DinnerActivity extends Activity {

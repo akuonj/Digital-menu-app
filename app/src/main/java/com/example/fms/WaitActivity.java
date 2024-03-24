@@ -1,10 +1,12 @@
-package com.example.hospitalfood;
+package com.example.fms;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.hospitalfood.R;
 
 public class WaitActivity extends Activity {
     private Button wtbutton;
