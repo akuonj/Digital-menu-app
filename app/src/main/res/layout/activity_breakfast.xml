@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/coffee">
 
     <TextView
         android:id="@+id/tvBreakfast"
@@ -26,6 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:text="FRUIT STATION:"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBreakfast" />
 
@@ -36,6 +38,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="17dp"
         android:text="CEREALS STATION:"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvbfFruit" />
 
@@ -46,6 +49,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="14dp"
         android:text="STARCH STATION:"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvbfCereal" />
 
@@ -56,6 +60,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="12dp"
         android:text="MEAT STATION:"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvbfStarch" />
 
@@ -66,6 +71,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="9dp"
         android:text="SPREADS:"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvbfMeat" />
 
@@ -92,6 +98,7 @@
         android:focusable="false"
         android:hint="Choose a fruit"
         android:inputType="text"
+        android:background="@drawable/tvbackg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvbfFruit"
         app:layout_constraintTop_toBottomOf="@+id/tvBreakfast" />
@@ -107,6 +114,7 @@
         android:focusable="false"
         android:hint="Choose a cereal"
         android:inputType="text"
+        android:background="@drawable/tvbackg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvbfCereal"
         app:layout_constraintTop_toBottomOf="@+id/etbfFruit" />
@@ -121,6 +129,7 @@
         android:focusable="false"
         android:hint="Choose a starch"
         android:inputType="text"
+        android:background="@drawable/tvbackg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvbfStarch"
         app:layout_constraintTop_toBottomOf="@+id/etbfCereal" />
@@ -135,6 +144,7 @@
         android:focusable="false"
         android:hint="Click to choose"
         android:inputType="text"
+        android:background="@drawable/tvbackg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvbfMeat"
         app:layout_constraintTop_toBottomOf="@+id/etbfStarch" />
@@ -148,6 +158,7 @@
         android:focusable="false"
         android:hint="Choose a spread"
         android:inputType="text"
+        android:background="@drawable/tvbackg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvbfSpreads"
         app:layout_constraintTop_toBottomOf="@+id/etbfMeat" />

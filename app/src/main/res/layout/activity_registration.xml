@@ -3,29 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/login">
 
 
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
-        android:hint="Username"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        android:layout_marginTop="61dp"
+        android:background="@color/cardview_dark_background"
+        android:hint="Table name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextUsername"
-        android:layout_marginBottom="34dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/cardview_dark_background"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
@@ -36,14 +40,27 @@
         android:layout_height="53dp"
         android:layout_below="@id/editTextPassword"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="155dp"
+        android:layout_marginStart="144dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="155dp"
-        android:layout_marginBottom="503dp"
+        android:layout_marginEnd="145dp"
         android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="109dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="151dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="151dp"
+        android:gravity="center"
+        android:text="Sign up"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
