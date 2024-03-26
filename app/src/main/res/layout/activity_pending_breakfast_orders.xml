@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/coffee">
 
     <TextView
         android:id="@+id/breakfastFruitTextView"
@@ -11,6 +12,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="31dp"
         android:text="Fruit: "
+        android:background="@drawable/tvbackg"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +25,7 @@
         android:layout_marginEnd="1dp"
         android:text="Cereal: "
         android:textSize="16sp"
+        android:background="@drawable/tvbackg"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breakfastFruitTextView" />
@@ -33,6 +36,7 @@
         android:layout_height="41dp"
         android:text="Starch: "
         android:textSize="16sp"
+        android:background="@drawable/tvbackg"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breakfastCerealTextView" />
@@ -43,6 +47,7 @@
         android:layout_height="40dp"
         android:text="Meat: "
         android:textSize="16sp"
+        android:background="@drawable/tvbackg"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breakfastStarchTextView" />
@@ -54,6 +59,7 @@
         android:layout_marginEnd="1dp"
         android:text="Spreads: "
         android:textSize="16sp"
+        android:background="@drawable/tvbackg"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breakfastMeatTextView" />
@@ -114,6 +120,7 @@
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="20dp"
         android:text="Food Items selected:"
+        android:textStyle="bold"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/breakfastFruitTextView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,6 +135,7 @@
         android:layout_marginTop="137dp"
         android:layout_marginEnd="54dp"
         android:text="Made by: "
+        android:background="@drawable/tvbackg"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,6 +149,7 @@
         android:layout_marginTop="11dp"
         android:layout_marginEnd="54dp"
         android:text="Time-Ordered: "
+        android:background="@drawable/tvbackg"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
