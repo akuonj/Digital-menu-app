@@ -15,7 +15,7 @@ public class ServedBreakfastActivity extends Activity {
     TextView breakfastFruitTextView, breakfastCerealTextView, breakfastStarchTextView, breakfastMeatTextView, breakfastSpreadsTextView;
 
     // Cursors for patient and breakfast data
-    Cursor deletedCursor;
+    Cursor ServedCursor;
     int currentRecordIndex = 0;
 
     @Override
@@ -36,7 +36,7 @@ public class ServedBreakfastActivity extends Activity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (currentRecordIndex < deletedCursor.getCount() - 1) {
+                if (currentRecordIndex < ServedCursor.getCount() - 1) {
                     currentRecordIndex++;
                     showDataForCurrentIndex();
                 } else {
@@ -45,10 +45,10 @@ public class ServedBreakfastActivity extends Activity {
             }
         });
 
-        HospitalDatabaseHelper dbHelper = new HospitalDatabaseHelper(this);
+        FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String[] projectionDeleted = {
+        String[] projectionServed = {
                 "Fruit",
                 "Cereal",
                 "Starch",
@@ -61,9 +61,9 @@ public class ServedBreakfastActivity extends Activity {
         String selection = null;
         String[] selectionArgs = null;
 
-        deletedCursor = db.query(
-                "DeletedOrders",
-                projectionDeleted,
+        ServedCursor = db.query(
+                "ServedOrders",
+                projectionServed,
                 selection,
                 selectionArgs,
                 null,
@@ -85,7 +85,7 @@ public class ServedBreakfastActivity extends Activity {
         });
 
 
-        if (deletedCursor.getCount() == 0) {
+        if (ServedCursor.getCount() == 0) {
             Toast.makeText(ServedBreakfastActivity.this, "No seved orders found.", Toast.LENGTH_SHORT).show();
         } else {
             showDataForCurrentIndex();
@@ -96,21 +96,21 @@ public class ServedBreakfastActivity extends Activity {
 
     // Helper method to show data for the current record index
     private void showDataForCurrentIndex() {
-        if (deletedCursor != null) {
+        if (ServedCursor != null) {
             // Check if the cursor is positioned at a valid row
-            int breakfastFruitColumnIndex = deletedCursor.getColumnIndex("Fruit");
-            int patientCerealColumnIndex = deletedCursor.getColumnIndex("Cereal");
-            int patientStarchColumnIndex = deletedCursor.getColumnIndex("Starch");
-            int patientMeatColumnIndex = deletedCursor.getColumnIndex("Meat");
-            int patientSpreadsColumnIndex = deletedCursor.getColumnIndex("Spreads");
+            int breakfastFruitColumnIndex = ServedCursor.getColumnIndex("Fruit");
+            int patientCerealColumnIndex = ServedCursor.getColumnIndex("Cereal");
+            int patientStarchColumnIndex = ServedCursor.getColumnIndex("Starch");
+            int patientMeatColumnIndex = ServedCursor.getColumnIndex("Meat");
+            int patientSpreadsColumnIndex = ServedCursor.getColumnIndex("Spreads");
 
-            if (deletedCursor.moveToPosition(currentRecordIndex) ) {
+            if (ServedCursor.moveToPosition(currentRecordIndex) ) {
                 // Retrieve and display data from the cursors
-                                String breakfastFruit = deletedCursor.getString(breakfastFruitColumnIndex);
-                String breakfastCereal = deletedCursor.getString(patientCerealColumnIndex);
-                String breakfastStarch = deletedCursor.getString(patientStarchColumnIndex);
-                String breakfastMeat = deletedCursor.getString(patientMeatColumnIndex);
-                String breakfastSpreads = deletedCursor.getString(patientSpreadsColumnIndex);
+                                String breakfastFruit = ServedCursor.getString(breakfastFruitColumnIndex);
+                String breakfastCereal = ServedCursor.getString(patientCerealColumnIndex);
+                String breakfastStarch = ServedCursor.getString(patientStarchColumnIndex);
+                String breakfastMeat = ServedCursor.getString(patientMeatColumnIndex);
+                String breakfastSpreads = ServedCursor.getString(patientSpreadsColumnIndex);
 
                 // Update your TextViews with data
                 breakfastFruitTextView.setText("Fruit:  " + breakfastFruit);

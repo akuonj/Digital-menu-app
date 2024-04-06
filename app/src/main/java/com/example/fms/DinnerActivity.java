@@ -85,7 +85,7 @@ public class DinnerActivity extends Activity {
                 String selectedStarch = etdStarch.getText().toString();
                 String selectedDessert = etdDesert.getText().toString();
 
-                HospitalDatabaseHelper dbHelper = new HospitalDatabaseHelper(DinnerActivity.this);
+                FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(DinnerActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();

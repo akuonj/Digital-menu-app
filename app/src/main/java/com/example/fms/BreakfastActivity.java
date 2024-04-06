@@ -74,7 +74,7 @@ public class BreakfastActivity extends Activity {
                 }
 
                 // Proceed with inserting data into the database
-                HospitalDatabaseHelper dbHelper = new HospitalDatabaseHelper(BreakfastActivity.this);
+                FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(BreakfastActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class HospitalDatabaseHelper extends SQLiteOpenHelper {
+public class FMSDatabaseHelper extends SQLiteOpenHelper {
     // Database and table names
     private static final String DATABASE_NAME = "Hospital.db";
     private static final int DATABASE_VERSION = 5;
@@ -18,7 +18,7 @@ public class HospitalDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USERNAME = "Username";
     private static final String COLUMN_PASSWORD = "Password";
 
-    public HospitalDatabaseHelper(Context context) {
+    public FMSDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -29,7 +29,7 @@ public class HospitalDatabaseHelper extends SQLiteOpenHelper {
         createBreakfastTable(db);
         createLunchTable(db);
         createDinnerTable(db);
-        createDeletedOrdersTable(db);
+        createServedOrdersTable(db);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class HospitalDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTableSQL);
     }
 
-    private void createDeletedOrdersTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE DeletedOrders (" +
+    private void createServedOrdersTable(SQLiteDatabase db) {
+        String createTableSQL = "CREATE TABLE ServedOrders (" +
                 "DeletedOrderID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Fruit TEXT, " +

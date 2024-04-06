@@ -48,7 +48,7 @@ public class ViewOrderActivity extends Activity {
             }
         });
 
-        HospitalDatabaseHelper dbHelper = new HospitalDatabaseHelper(this);
+        FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projectionBreakfast = {
@@ -109,7 +109,7 @@ public class ViewOrderActivity extends Activity {
                     String breakfastMeat = breakfastCursor.getString(breakfastMeatColumnIndex);
                     String breakfastSpreads = breakfastCursor.getString(breakfastSpreadsColumnIndex);
 
-                    HospitalDatabaseHelper dbHelper = new HospitalDatabaseHelper(ViewOrderActivity.this);
+                    FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(ViewOrderActivity.this);
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                     // Insert data into DeletedOrders

@@ -16,7 +16,7 @@ public class RegistrationActivity extends Activity {
     private EditText editTextPassword;
     private Button buttonRegister;
 
-    private HospitalDatabaseHelper dbHelper;
+    private FMSDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class RegistrationActivity extends Activity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
 
-        dbHelper = new HospitalDatabaseHelper(this);
+        dbHelper = new FMSDatabaseHelper(this);
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
