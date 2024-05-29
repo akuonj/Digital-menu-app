@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.hospitalfood.R;
 
-public class ViewOrderActivity extends Activity {
+public class ViewBOrderActivity extends Activity {
     // TextViews to display breakfast data
     TextView breakfastFruitTextView, breakfastCerealTextView, breakfastStarchTextView, breakfastMeatTextView, breakfastSpreadsTextView;
 
@@ -43,7 +43,7 @@ public class ViewOrderActivity extends Activity {
                     currentRecordIndex++;
                     showDataForCurrentIndex();
                 } else {
-                    Toast.makeText(ViewOrderActivity.this, "No more records found!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewBOrderActivity.this, "No more records found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -77,7 +77,7 @@ public class ViewOrderActivity extends Activity {
                     currentRecordIndex--;
                     showDataForCurrentIndex();
                 } else {
-                    Toast.makeText(ViewOrderActivity.this, "No previous records found!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewBOrderActivity.this, "No previous records found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -98,7 +98,7 @@ public class ViewOrderActivity extends Activity {
                             breakfastStarchColumnIndex == -1 || breakfastMeatColumnIndex == -1 ||
                             breakfastSpreadsColumnIndex == -1) {
                         // Handle the case where any column is not found in the cursor
-                        Toast.makeText(ViewOrderActivity.this, "One or more columns not found in cursor", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ViewBOrderActivity.this, "One or more columns not found in cursor", Toast.LENGTH_SHORT).show();
                         return; // Exit the method to prevent further processing
                     }
 
@@ -109,7 +109,7 @@ public class ViewOrderActivity extends Activity {
                     String breakfastMeat = breakfastCursor.getString(breakfastMeatColumnIndex);
                     String breakfastSpreads = breakfastCursor.getString(breakfastSpreadsColumnIndex);
 
-                    FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(ViewOrderActivity.this);
+                    FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(ViewBOrderActivity.this);
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                     // Insert data into DeletedOrders
@@ -131,22 +131,22 @@ public class ViewOrderActivity extends Activity {
 
                         if (deletedRows > 0) {
                             // Original records served successfully
-                            Toast.makeText(ViewOrderActivity.this, "Order Served!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ViewBOrderActivity.this, "Order Served!", Toast.LENGTH_SHORT).show();
                             currentRecordIndex = 0; // Move back to the first record or perform another action as needed
                             showDataForCurrentIndex();
                         } else {
                             // Served failed
-                            Toast.makeText(ViewOrderActivity.this, "Failed to serve order", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ViewBOrderActivity.this, "Failed to serve order", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // Insertion into Serve orders failed
-                        Toast.makeText(ViewOrderActivity.this, "Failed to move order to Served Orders", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ViewBOrderActivity.this, "Failed to move order to Served Orders", Toast.LENGTH_SHORT).show();
                     }
 
                     db.close();
                 } else {
                     // Handle the case where moveToPosition returns false, indicating invalid cursor position
-                    Toast.makeText(ViewOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewBOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -154,7 +154,7 @@ public class ViewOrderActivity extends Activity {
 
 
         if (breakfastCursor.getCount() == 0) {
-            Toast.makeText(ViewOrderActivity.this, "No breakfast orders found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ViewBOrderActivity.this, "No breakfast orders found.", Toast.LENGTH_SHORT).show();
         } else {
             showDataForCurrentIndex();
         }
@@ -184,10 +184,10 @@ public class ViewOrderActivity extends Activity {
                 breakfastMeatTextView.setText("Meat:  " + breakfastMeat);
                 breakfastSpreadsTextView.setText("Spreads:  " + breakfastSpreads);
             } else {
-                Toast.makeText(ViewOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ViewBOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(ViewOrderActivity.this, "No data in the cursor", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ViewBOrderActivity.this, "No data in the cursor", Toast.LENGTH_SHORT).show();
         }
     }
 }

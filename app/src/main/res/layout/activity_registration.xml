@@ -9,27 +9,27 @@
 
     <EditText
         android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="34dp"
         android:layout_marginTop="61dp"
         android:background="@color/cardview_dark_background"
         android:hint="Table name"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="#BCAAA4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="408dp"
+        android:layout_height="33dp"
         android:layout_below="@id/editTextUsername"
         android:layout_marginTop="8dp"
         android:background="@color/cardview_dark_background"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColorHint="@color/white"
+        android:textColorHint="#BCAAA4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />

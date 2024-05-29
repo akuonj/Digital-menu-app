@@ -44,7 +44,7 @@
         <activity android:name="com.example.fms.BreakfastActivity"></activity>
         <activity android:name="com.example.fms.LunchActivity"></activity>
         <activity android:name="com.example.fms.DinnerActivity"></activity>
-        <activity android:name="com.example.fms.ViewOrderActivity"></activity>
+        <activity android:name="com.example.fms.ViewBOrderActivity"></activity>
         <activity android:name="com.example.fms.PendingOrderActivity"></activity>
         <activity android:name="com.example.fms.ServedBreakfastActivity"></activity>
         <activity android:name="com.example.fms.WelcomeActivity"></activity>

@@ -13,10 +13,18 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
     // Database and table names
     private static final String DATABASE_NAME = "Hospital.db";
     private static final int DATABASE_VERSION = 5;
+
+    // Users table and columns
     private static final String TABLE_USERS = "Users";
     private static final String COLUMN_ID = "UserID";
     private static final String COLUMN_USERNAME = "Username";
     private static final String COLUMN_PASSWORD = "Password";
+
+    // Other tables
+    private static final String TABLE_BREAKFAST = "Breakfast";
+    private static final String TABLE_LUNCH = "Lunch";
+    private static final String TABLE_DINNER = "Dinner";
+    private static final String TABLE_SERVED_ORDERS = "ServedOrders";
 
     public FMSDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,9 +42,8 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Upgrade logic
-        if (oldVersion < 5 && !isColumnExists(db, "Breakfast", "Fruit")) {
-            db.execSQL("ALTER TABLE Breakfast ADD COLUMN Fruit TEXT;");
+        if (oldVersion < 5 && !isColumnExists(db, TABLE_BREAKFAST, "Fruit")) {
+            db.execSQL("ALTER TABLE " + TABLE_BREAKFAST + " ADD COLUMN Fruit TEXT;");
         }
     }
 
@@ -49,7 +56,7 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void createBreakfastTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE Breakfast (" +
+        String createTableSQL = "CREATE TABLE " + TABLE_BREAKFAST + " (" +
                 "BreakfastID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Fruit TEXT, " +
@@ -57,12 +64,12 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
                 "Starch TEXT, " +
                 "Meat TEXT, " +
                 "Spreads TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES Users(UserID))";
+                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createTableSQL);
     }
 
     private void createLunchTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE Lunch (" +
+        String createTableSQL = "CREATE TABLE " + TABLE_LUNCH + " (" +
                 "LunchID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Soup TEXT, " +
@@ -72,12 +79,12 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
                 "NonVegetarian TEXT, " +
                 "Starch TEXT, " +
                 "Dessert TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES Users(UserID))";
+                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createTableSQL);
     }
 
     private void createDinnerTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE Dinner (" +
+        String createTableSQL = "CREATE TABLE " + TABLE_DINNER + " (" +
                 "DinnerID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Soup TEXT, " +
@@ -86,20 +93,20 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
                 "NonVegetarian TEXT, " +
                 "Starch TEXT, " +
                 "Dessert TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES Users(UserID))";
+                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createTableSQL);
     }
 
     private void createServedOrdersTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE ServedOrders (" +
-                "DeletedOrderID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        String createTableSQL = "CREATE TABLE " + TABLE_SERVED_ORDERS + " (" +
+                "ServedOrderID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Fruit TEXT, " +
                 "Cereal TEXT, " +
                 "Starch TEXT, " +
                 "Meat TEXT, " +
                 "Spreads TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES Users(UserID))";
+                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createTableSQL);
     }
 
@@ -118,29 +125,24 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
     public boolean authenticateUser(String username, String password, Context context) {
         SQLiteDatabase db = this.getReadableDatabase();
         boolean result = false;
+        Cursor cursor = null;
         try {
-            // Check if the Users table exists
             if (!isTableExists(db, TABLE_USERS)) {
-                // Start the register activity
                 Intent intent = new Intent(context, RegistrationActivity.class);
                 context.startActivity(intent);
                 return false;
             }
-
-            // Continue with authentication if the Users table exists
-            Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
+            cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
                     COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?",
                     new String[]{username, password}, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {
-                // Authentication successful
                 result = true;
-                cursor.close();
             }
         } catch (SQLiteException e) {
-            // Handle the error here, such as logging or displaying an error message
             e.printStackTrace();
         } finally {
+            if (cursor != null) cursor.close();
             db.close();
         }
         return result;
@@ -149,32 +151,24 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
     // Method to get the UserID of a user based on username
     public int getUserId(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        int userId = -1; // Default value if user not found
+        int userId = -1;
+        Cursor cursor = null;
         try {
-            Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
+            cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
                     COLUMN_USERNAME + " = ?",
                     new String[]{username}, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
-                // Log column names available in the cursor for debugging
-                String[] columnNames = cursor.getColumnNames();
-                for (String columnName : columnNames) {
-                    Log.d("CursorColumn", "Column name: " + columnName);
-                }
-
-                // Retrieve the UserID column value
                 int columnIndex = cursor.getColumnIndex(COLUMN_ID);
                 if (columnIndex != -1) {
                     userId = cursor.getInt(columnIndex);
                 } else {
                     Log.e("CursorColumn", "Column index not found for column: " + COLUMN_ID);
                 }
-
-                cursor.close();
             }
-
         } catch (SQLiteException e) {
             e.printStackTrace();
         } finally {
+            if (cursor != null) cursor.close();
             db.close();
         }
         return userId;

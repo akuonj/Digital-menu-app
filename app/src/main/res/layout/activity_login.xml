@@ -9,13 +9,13 @@
 
     <EditText
         android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="37dp"
         android:layout_marginTop="8dp"
         android:background="@color/cardview_dark_background"
         android:hint="Table name"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="#BCAAA4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,15 +23,15 @@
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="35dp"
         android:layout_below="@id/editTextUsername"
         android:layout_marginTop="9dp"
         android:background="@color/cardview_dark_background"
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="#BCAAA4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
@@ -52,8 +52,8 @@
 
     <Button
         android:id="@+id/adMin"
-        android:layout_width="89dp"
-        android:layout_height="45dp"
+        android:layout_width="104dp"
+        android:layout_height="46dp"
         android:layout_marginStart="143dp"
         android:layout_marginEnd="143dp"
         android:layout_marginBottom="30dp"
@@ -69,12 +69,14 @@
         android:layout_marginStart="122dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="122dp"
-        android:textSize="20dp"
+        android:gravity="center"
         android:text="Sign in"
         android:textAlignment="center"
-        android:gravity="center"
+        android:textColor="#039BE5"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
