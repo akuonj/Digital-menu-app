@@ -27,7 +27,7 @@ public class PendingOrderActivity extends Activity {
         breakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PendingOrderActivity.this, ViewBOrderActivity.class);
+                Intent intent = new Intent(PendingOrderActivity.this, PendingBOrderActivity.class);
                 startActivity(intent);
             }
         });

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.hospitalfood.R;
 
-public class ViewBOrderActivity extends Activity {
+public class PendingBOrderActivity extends Activity {
     // TextViews to display breakfast data
     TextView breakfastFruitTextView, breakfastCerealTextView, breakfastStarchTextView, breakfastMeatTextView, breakfastSpreadsTextView;
 
@@ -43,7 +43,7 @@ public class ViewBOrderActivity extends Activity {
                     currentRecordIndex++;
                     showDataForCurrentIndex();
                 } else {
-                    Toast.makeText(ViewBOrderActivity.this, "No more records found!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PendingBOrderActivity.this, "No more records found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -77,7 +77,7 @@ public class ViewBOrderActivity extends Activity {
                     currentRecordIndex--;
                     showDataForCurrentIndex();
                 } else {
-                    Toast.makeText(ViewBOrderActivity.this, "No previous records found!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PendingBOrderActivity.this, "No previous records found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -98,7 +98,7 @@ public class ViewBOrderActivity extends Activity {
                             breakfastStarchColumnIndex == -1 || breakfastMeatColumnIndex == -1 ||
                             breakfastSpreadsColumnIndex == -1) {
                         // Handle the case where any column is not found in the cursor
-                        Toast.makeText(ViewBOrderActivity.this, "One or more columns not found in cursor", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PendingBOrderActivity.this, "One or more columns not found in cursor", Toast.LENGTH_SHORT).show();
                         return; // Exit the method to prevent further processing
                     }
 
@@ -109,7 +109,7 @@ public class ViewBOrderActivity extends Activity {
                     String breakfastMeat = breakfastCursor.getString(breakfastMeatColumnIndex);
                     String breakfastSpreads = breakfastCursor.getString(breakfastSpreadsColumnIndex);
 
-                    FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(ViewBOrderActivity.this);
+                    FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(PendingBOrderActivity.this);
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                     // Insert data into DeletedOrders
@@ -120,7 +120,7 @@ public class ViewBOrderActivity extends Activity {
                     deletedOrderValues.put("Meat", breakfastMeat);
                     deletedOrderValues.put("Spreads", breakfastSpreads);
 
-                    long deletedOrderID = db.insert("DeletedOrders", null, deletedOrderValues);
+                    long deletedOrderID = db.insert("ServedOrders", null, deletedOrderValues);
 
                     if (deletedOrderID != -1) {
                         // Record successfully moved to DeletedOrders
@@ -131,22 +131,22 @@ public class ViewBOrderActivity extends Activity {
 
                         if (deletedRows > 0) {
                             // Original records served successfully
-                            Toast.makeText(ViewBOrderActivity.this, "Order Served!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PendingBOrderActivity.this, "Order Served!", Toast.LENGTH_SHORT).show();
                             currentRecordIndex = 0; // Move back to the first record or perform another action as needed
                             showDataForCurrentIndex();
                         } else {
                             // Served failed
-                            Toast.makeText(ViewBOrderActivity.this, "Failed to serve order", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PendingBOrderActivity.this, "Failed to serve order", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // Insertion into Serve orders failed
-                        Toast.makeText(ViewBOrderActivity.this, "Failed to move order to Served Orders", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PendingBOrderActivity.this, "Failed to move order to Served Orders", Toast.LENGTH_SHORT).show();
                     }
 
                     db.close();
                 } else {
                     // Handle the case where moveToPosition returns false, indicating invalid cursor position
-                    Toast.makeText(ViewBOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PendingBOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -154,7 +154,7 @@ public class ViewBOrderActivity extends Activity {
 
 
         if (breakfastCursor.getCount() == 0) {
-            Toast.makeText(ViewBOrderActivity.this, "No breakfast orders found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PendingBOrderActivity.this, "No breakfast orders found.", Toast.LENGTH_SHORT).show();
         } else {
             showDataForCurrentIndex();
         }
@@ -184,10 +184,10 @@ public class ViewBOrderActivity extends Activity {
                 breakfastMeatTextView.setText("Meat:  " + breakfastMeat);
                 breakfastSpreadsTextView.setText("Spreads:  " + breakfastSpreads);
             } else {
-                Toast.makeText(ViewBOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PendingBOrderActivity.this, "Error: Invalid cursor position", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(ViewBOrderActivity.this, "No data in the cursor", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PendingBOrderActivity.this, "No data in the cursor", Toast.LENGTH_SHORT).show();
         }
     }
 }
