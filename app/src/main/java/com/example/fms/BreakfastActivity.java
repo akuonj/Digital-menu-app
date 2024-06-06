@@ -1,22 +1,25 @@
 package com.example.fms;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.view.View;
-import android.widget.Toast;
-import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
-
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.hospitalfood.R;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class BreakfastActivity extends Activity {
-    Button ok;
-    AutoCompleteTextView etbfFruit, etbfCereal, etbfStarch, etbfMeat, etbfSpreads;
+
+    private Button ok;
+    private RecyclerView breakfastRecyclerView;
+    private BreakfastAdapter breakfastAdapter;
+    private List<BreakfastItem> breakfastItems;
 
     private String[] fruitOptions = {"Pineapple", "Melon"};
     private String[] cerealsOptions = {"Wimbi Porridge", "Oatmeal Porridge", "Weetabix", "Cornflakes"};
@@ -24,48 +27,34 @@ public class BreakfastActivity extends Activity {
     private String[] meatOptions = {"Chicken Sausage"};
     private String[] spreadsOptions = {"Butter", "Marmalade", "Jam"};
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breakfast);
 
         ok = findViewById(R.id.btbfOk);
+        breakfastRecyclerView = findViewById(R.id.breakfast_recycler_view);
+        breakfastRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        etbfFruit = findViewById(R.id.etbfFruit);
-        etbfCereal = findViewById(R.id.etbfCereal);
-        etbfStarch = findViewById(R.id.etbfStarch);
-        etbfMeat = findViewById(R.id.etbfMeat);
-        etbfSpreads = findViewById(R.id.etbfSpreads);
+        // Initialize the breakfast items list
+        breakfastItems = new ArrayList<>();
+        breakfastItems.add(new BreakfastItem("Fruit", "Choose a fruit"));
+        breakfastItems.add(new BreakfastItem("Cereal", "Choose a cereal"));
+        breakfastItems.add(new BreakfastItem("Starch", "Choose a starch"));
+        breakfastItems.add(new BreakfastItem("Meat", "Choose a meat"));
+        breakfastItems.add(new BreakfastItem("Spreads", "Choose a spread"));
 
-        ArrayAdapter<String> fruitAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fruitOptions);
-        etbfFruit.setAdapter(fruitAdapter);
-        etbfFruit.setThreshold(1);
-
-        ArrayAdapter<String> cerealsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cerealsOptions);
-        etbfCereal.setAdapter(cerealsAdapter);
-        etbfCereal.setThreshold(1);
-
-        ArrayAdapter<String> starchAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, starchOptions);
-        etbfStarch.setAdapter(starchAdapter);
-        etbfStarch.setThreshold(1);
-
-        ArrayAdapter<String> meatAdapter =new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, meatOptions);
-        etbfMeat.setAdapter(meatAdapter);
-        etbfMeat.setThreshold(1);
-
-        ArrayAdapter<String> spreadAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spreadsOptions);
-        etbfSpreads.setAdapter(spreadAdapter);
-        etbfSpreads.setThreshold(1);
+        breakfastAdapter = new BreakfastAdapter(breakfastItems);
+        breakfastRecyclerView.setAdapter(breakfastAdapter);
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedFruit = etbfFruit.getText().toString().trim();
-                String selectedCereal = etbfCereal.getText().toString().trim();
-                String selectedStarch = etbfStarch.getText().toString().trim();
-                String selectedMeat = etbfMeat.getText().toString().trim();
-                String selectedSpreads = etbfSpreads.getText().toString().trim();
+                String selectedFruit = breakfastItems.get(0).getSelectedOption();
+                String selectedCereal = breakfastItems.get(1).getSelectedOption();
+                String selectedStarch = breakfastItems.get(2).getSelectedOption();
+                String selectedMeat = breakfastItems.get(3).getSelectedOption();
+                String selectedSpreads = breakfastItems.get(4).getSelectedOption();
 
                 // Check if any of the fields are empty
                 if (selectedFruit.isEmpty() || selectedCereal.isEmpty() || selectedStarch.isEmpty() || selectedMeat.isEmpty() || selectedSpreads.isEmpty()) {
@@ -97,44 +86,5 @@ public class BreakfastActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-
-
-        etbfFruit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etbfFruit.showDropDown();
-            }
-        });
-
-        etbfCereal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etbfCereal.showDropDown();
-            }
-        });
-
-        etbfStarch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etbfStarch.showDropDown();
-            }
-        });
-
-        etbfMeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etbfMeat.showDropDown();
-            }
-        });
-
-        etbfSpreads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etbfSpreads.showDropDown();
-            }
-        });
-
-
     }
 }
