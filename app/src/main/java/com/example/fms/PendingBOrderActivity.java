@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class PendingBOrderActivity extends Activity {
     // TextViews to display breakfast data
@@ -48,7 +48,7 @@ public class PendingBOrderActivity extends Activity {
             }
         });
 
-        FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(this);
+        DMDatabaseHelper dbHelper = new DMDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projectionBreakfast = {
@@ -109,7 +109,7 @@ public class PendingBOrderActivity extends Activity {
                     String breakfastMeat = breakfastCursor.getString(breakfastMeatColumnIndex);
                     String breakfastSpreads = breakfastCursor.getString(breakfastSpreadsColumnIndex);
 
-                    FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(PendingBOrderActivity.this);
+                    DMDatabaseHelper dbHelper = new DMDatabaseHelper(PendingBOrderActivity.this);
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                     // Insert data into DeletedOrders

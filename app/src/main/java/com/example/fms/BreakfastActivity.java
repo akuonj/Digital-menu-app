@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class BreakfastActivity extends Activity {
                 }
 
                 // Proceed with inserting data into the database
-                FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(BreakfastActivity.this);
+                DMDatabaseHelper dbHelper = new DMDatabaseHelper(BreakfastActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();

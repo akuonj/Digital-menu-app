@@ -61,7 +61,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     // Implement this method to retrieve breakfast order details based on the patient's IDNumber
     private String retrieveBreakfastOrder(Context context, String patientIDNumber) {
-        FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(context);
+        DMDatabaseHelper dbHelper = new DMDatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {

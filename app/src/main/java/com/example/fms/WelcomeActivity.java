@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class WelcomeActivity extends Activity {
 
@@ -28,7 +28,7 @@ public class WelcomeActivity extends Activity {
                 // Handle menu item selection
                 String selectedItem = parentView.getItemAtPosition(position).toString();
                 switch (selectedItem) {
-                    case "Make Order":
+                    case "Yes":
                         Intent makeOrderIntent = new Intent(WelcomeActivity.this, SelectMealActivity.class);
                         startActivity(makeOrderIntent);
                         break;

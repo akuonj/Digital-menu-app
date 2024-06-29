@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class WaitActivity extends Activity {
     private Button wtbutton;

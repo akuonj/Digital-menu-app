@@ -11,7 +11,7 @@ import android.widget.Toast;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 
 public class LunchActivity extends Activity {
@@ -91,7 +91,7 @@ public class LunchActivity extends Activity {
                 String selectedStarch = etlStarch.getText().toString();
                 String selectedDessert = etlDesert.getText().toString();
 
-                FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(LunchActivity.this);
+                DMDatabaseHelper dbHelper = new DMDatabaseHelper(LunchActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();

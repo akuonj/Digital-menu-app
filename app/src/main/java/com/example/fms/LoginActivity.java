@@ -8,14 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class LoginActivity extends Activity {
     private EditText editTextUsername;
     private EditText editTextPassword;
     private Button buttonLogin, adMin;
 
-    private FMSDatabaseHelper dbHelper;
+    private DMDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
         buttonLogin = findViewById(R.id.buttonLogin);
         adMin = findViewById(R.id.adMin);
 
-        dbHelper = new FMSDatabaseHelper(this);
+        dbHelper = new DMDatabaseHelper(this);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override

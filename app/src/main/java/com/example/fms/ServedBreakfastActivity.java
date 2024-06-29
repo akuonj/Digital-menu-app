@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class ServedBreakfastActivity extends Activity {
     TextView breakfastFruitTextView, breakfastCerealTextView, breakfastStarchTextView, breakfastMeatTextView, breakfastSpreadsTextView;
@@ -32,7 +32,7 @@ public class ServedBreakfastActivity extends Activity {
         Button nextButton = findViewById(R.id.nextButton);
         Button previousButton = findViewById(R.id.previousButton);
 
-        FMSDatabaseHelper dbHelper = new FMSDatabaseHelper(this);
+        DMDatabaseHelper dbHelper = new DMDatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projectionServed = {

@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">FMS</string>
-    <string name="placeholder_item"> Select an option </string>
+    <string name="app_name">DM</string>
+    <string name="placeholder_item"> Do you want to order now? </string>
 
 
     <string-array name="menu_items">
         <item>@string/placeholder_item</item>
-        <item>Make Order</item>
+        <item>Yes</item>
+        <item>No</item>
     </string-array>
 </resources>

@@ -9,14 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class RegistrationActivity extends Activity {
     private EditText editTextUsername;
     private EditText editTextPassword;
     private Button buttonRegister;
 
-    private FMSDatabaseHelper dbHelper;
+    private DMDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class RegistrationActivity extends Activity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
 
-        dbHelper = new FMSDatabaseHelper(this);
+        dbHelper = new DMDatabaseHelper(this);
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override

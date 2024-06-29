@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class FMSDatabaseHelper extends SQLiteOpenHelper {
+public class DMDatabaseHelper extends SQLiteOpenHelper {
     // Database and table names
     private static final String DATABASE_NAME = "Hospital.db";
     private static final int DATABASE_VERSION = 5;
@@ -26,7 +26,7 @@ public class FMSDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_DINNER = "Dinner";
     private static final String TABLE_SERVED_ORDERS = "ServedOrders";
 
-    public FMSDatabaseHelper(Context context) {
+    public DMDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

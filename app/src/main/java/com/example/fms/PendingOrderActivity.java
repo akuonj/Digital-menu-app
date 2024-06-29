@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.hospitalfood.R;
+import com.example.fms.R;
 
 public class PendingOrderActivity extends Activity {
     Button breakfast, lunch, dinner;

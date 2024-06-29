@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "HOSPITAL FOOD"
+rootProject.name = "Digital Menu"
 include(":app")
  

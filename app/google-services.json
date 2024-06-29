@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357520070858",
+    "project_id": "digital-menu-a09d2",
+    "storage_bucket": "digital-menu-a09d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357520070858:android:d80472e4f2528ae7c97c33",
+        "android_client_info": {
+          "package_name": "com.example.fms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgmqmcPobr5nNpA8nSllSIPBcBQa8AXtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

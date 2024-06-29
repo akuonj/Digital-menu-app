@@ -13,7 +13,7 @@
         android:layout_height="37dp"
         android:layout_marginTop="8dp"
         android:background="@color/cardview_dark_background"
-        android:hint="Table name"
+        android:hint="Email"
         android:textColor="@color/white"
         android:textColorHint="#BCAAA4"
         app:layout_constraintEnd_toEndOf="parent"
