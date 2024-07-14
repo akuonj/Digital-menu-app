@@ -1,5 +1,7 @@
 package com.example.fms;
 
+import java.util.Objects;
+
 public class BreakfastItem {
     private String category;
     private String selectedOption;
@@ -7,13 +9,15 @@ public class BreakfastItem {
     private int selectedIndex;
 
     public BreakfastItem(String category, String selectedOption, String[] options) {
-        this.category = category;
-        this.selectedOption = selectedOption;
-        this.options = options;
+        this.category = Objects.requireNonNull(category, "Category cannot be null");
+        this.selectedOption = selectedOption; // Allow null for selected option
+        this.options = Objects.requireNonNull(options, "Options cannot be null");
         this.selectedIndex = 0; // Default to the first option
     }
 
+    // Remove the empty constructor if not used
     public BreakfastItem(String fruit, String chooseAFruit) {
+        this(fruit, chooseAFruit, new String[]{}); // Initialize with an empty array
     }
 
     public String getCategory() {

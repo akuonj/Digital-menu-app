@@ -14,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fms.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.ViewHolder> {
 
     private List<BreakfastItem> breakfastItems;
 
     public BreakfastAdapter(List<BreakfastItem> breakfastItems) {
-        this.breakfastItems = breakfastItems;
+        // Ensure breakfastItems is not null
+        this.breakfastItems = Objects.requireNonNull(breakfastItems, "Breakfast items list cannot be null");
     }
 
     @NonNull
@@ -32,12 +34,13 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BreakfastItem item = breakfastItems.get(position);
+        // Ensure the item is not null
+        BreakfastItem item = Objects.requireNonNull(breakfastItems.get(position), "Breakfast item at position " + position + " is null");
         holder.tvBreakfastCategory.setText(item.getCategory());
 
         // Setting up Spinner for selecting options
         ArrayAdapter<String> adapter = new ArrayAdapter<>(holder.itemView.getContext(),
-                android.R.layout.simple_spinner_item, item.getOptions());
+                android.R.layout.simple_spinner_item, Objects.requireNonNull(item.getOptions(), "Options for item " + position + " are null"));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinner.setAdapter(adapter);
 

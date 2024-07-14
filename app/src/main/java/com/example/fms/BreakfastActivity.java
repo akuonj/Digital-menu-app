@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.fms.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +37,11 @@ public class BreakfastActivity extends Activity {
 
         // Initialize the breakfast items list
         breakfastItems = new ArrayList<>();
-        breakfastItems.add(new BreakfastItem("Fruit", "Choose a fruit"));
-        breakfastItems.add(new BreakfastItem("Cereal", "Choose a cereal"));
-        breakfastItems.add(new BreakfastItem("Starch", "Choose a starch"));
-        breakfastItems.add(new BreakfastItem("Meat", "Choose a meat"));
-        breakfastItems.add(new BreakfastItem("Spreads", "Choose a spread"));
+        breakfastItems.add(new BreakfastItem("Fruit", fruitOptions[0], fruitOptions));
+        breakfastItems.add(new BreakfastItem("Cereal", cerealsOptions[0], cerealsOptions));
+        breakfastItems.add(new BreakfastItem("Starch", starchOptions[0], starchOptions));
+        breakfastItems.add(new BreakfastItem("Meat", meatOptions[0], meatOptions));
+        breakfastItems.add(new BreakfastItem("Spreads", spreadsOptions[0], spreadsOptions));
 
         breakfastAdapter = new BreakfastAdapter(breakfastItems);
         breakfastRecyclerView.setAdapter(breakfastAdapter);
