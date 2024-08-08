@@ -1,5 +1,6 @@
 package com.example.fms;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -9,21 +10,25 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class DMDatabaseHelper extends SQLiteOpenHelper {
     // Database and table names
     private static final String DATABASE_NAME = "Hospital.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6; // Incremented version
 
     // Users table and columns
     private static final String TABLE_USERS = "Users";
     private static final String COLUMN_ID = "UserID";
-    private static final String COLUMN_USERNAME = "Username";
+    public static final String COLUMN_USERNAME = "Username";
     private static final String COLUMN_PASSWORD = "Password";
 
-    // Other tables
-    private static final String TABLE_BREAKFAST = "Breakfast";
-    private static final String TABLE_LUNCH = "Lunch";
-    private static final String TABLE_DINNER = "Dinner";
+    // Meals table
+    private static final String TABLE_MEALS = "Meals";
     private static final String TABLE_SERVED_ORDERS = "ServedOrders";
 
     public DMDatabaseHelper(Context context) {
@@ -34,20 +39,33 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Create tables
         createUsersTable(db);
-        createBreakfastTable(db);
-        createLunchTable(db);
-        createDinnerTable(db);
+        createMealsTable(db);
         createServedOrdersTable(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 5 && !isColumnExists(db, TABLE_BREAKFAST, "Fruit")) {
-            db.execSQL("ALTER TABLE " + TABLE_BREAKFAST + " ADD COLUMN Fruit TEXT;");
+        try {
+            if (oldVersion < 6) {
+                if (isTableExists(db, TABLE_SERVED_ORDERS)) {
+                    // Add columns if they don't exist
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "OrderedBy")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN OrderedBy INTEGER;");
+                    }
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "OrderedTime")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN OrderedTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP;");
+                    }
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "ServedTime")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN ServedTime TIMESTAMP;");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("DBUpgradeError", "Error during database upgrade: " + e.getMessage());
         }
     }
 
-    private void createUsersTable(SQLiteDatabase db) {
+    public void createUsersTable(SQLiteDatabase db) {
         String createUserTableSQL = "CREATE TABLE " + TABLE_USERS + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_USERNAME + " TEXT UNIQUE, " +
@@ -55,45 +73,19 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createUserTableSQL);
     }
 
-    private void createBreakfastTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE " + TABLE_BREAKFAST + " (" +
-                "BreakfastID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    private void createMealsTable(SQLiteDatabase db) {
+        String createTableSQL = "CREATE TABLE " + TABLE_MEALS + " (" +
+                "MealID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Fruit TEXT, " +
                 "Cereal TEXT, " +
                 "Starch TEXT, " +
                 "Meat TEXT, " +
                 "Spreads TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
-        db.execSQL(createTableSQL);
-    }
-
-    private void createLunchTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE " + TABLE_LUNCH + " (" +
-                "LunchID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "UserID INTEGER, " +
-                "Soup TEXT, " +
-                "Salad TEXT, " +
-                "Vegetarian TEXT, " +
-                "Blended TEXT, " +
-                "NonVegetarian TEXT, " +
-                "Starch TEXT, " +
-                "Dessert TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
-        db.execSQL(createTableSQL);
-    }
-
-    private void createDinnerTable(SQLiteDatabase db) {
-        String createTableSQL = "CREATE TABLE " + TABLE_DINNER + " (" +
-                "DinnerID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "UserID INTEGER, " +
-                "Soup TEXT, " +
-                "Salad TEXT, " +
-                "Vegetarian TEXT, " +
-                "NonVegetarian TEXT, " +
-                "Starch TEXT, " +
-                "Dessert TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
+                "OrderedBy INTEGER, " +
+                "TimeOrdered TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "), " +
+                "FOREIGN KEY(OrderedBy) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createTableSQL);
     }
 
@@ -106,41 +98,76 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
                 "Starch TEXT, " +
                 "Meat TEXT, " +
                 "Spreads TEXT, " +
-                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
+                "OrderedBy INTEGER, " +
+                "OrderedTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                "ServedTime TIMESTAMP, " +
+                "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "), " +
+                "FOREIGN KEY(OrderedBy) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createTableSQL);
     }
 
-    // Method to add a new user to the Users table
-    public boolean addUser(String username, String password) {
+    // Method to hash a password
+    public String hashPassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    }
+
+    public String getCurrentTimeInKenyanTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Africa/Nairobi"));
+        return sdf.format(new Date());
+    }
+
+    // Method to add a new user with hashed password
+    public boolean addUser(String username, String plainPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, username);
-        values.put(COLUMN_PASSWORD, password);
+        values.put(COLUMN_PASSWORD, hashPassword(plainPassword)); // Hash the password
         long result = db.insert(TABLE_USERS, null, values);
         db.close();
         return result != -1; // Returns true if insertion was successful
     }
 
     // Method to authenticate a user based on provided username and password
-    public boolean authenticateUser(String username, String password, Context context) {
+    public boolean authenticateUser(String username, String plainPassword, Context context) {
         SQLiteDatabase db = this.getReadableDatabase();
         boolean result = false;
         Cursor cursor = null;
+
         try {
+            // Check if credentials are for admin
+            if (username.equals("admin") && plainPassword.equals("admin")) {
+                Intent intent = new Intent(context, AdminActivity.class);
+                context.startActivity(intent);
+                return true; // Successful login as admin
+            }
+
+            // Check if users table exists
             if (!isTableExists(db, TABLE_USERS)) {
                 Intent intent = new Intent(context, RegistrationActivity.class);
                 context.startActivity(intent);
                 return false;
             }
-            cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
-                    COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?",
-                    new String[]{username, password}, null, null, null);
+
+            cursor = db.query(TABLE_USERS, new String[]{COLUMN_PASSWORD},
+                    COLUMN_USERNAME + " = ?",
+                    new String[]{username}, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {
-                result = true;
+                @SuppressLint("Range") String hashedPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+                result = BCrypt.checkpw(plainPassword, hashedPassword); // Check hashed password
+                if (result) {
+                    // If authenticated, proceed to the main activity
+                    Intent intent = new Intent(context, WelcomeActivity.class);
+                    intent.putExtra("USERNAME", username); // Pass username to the next activity
+                    context.startActivity(intent);
+                } else {
+                    // Invalid credentials
+                    Log.e("Authentication", "Invalid credentials for user: " + username);
+                }
             }
         } catch (SQLiteException e) {
-            e.printStackTrace();
+            Log.e("DBError", "Database error: " + e.getMessage());
         } finally {
             if (cursor != null) cursor.close();
             db.close();
@@ -158,7 +185,7 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_USERNAME + " = ?",
                     new String[]{username}, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndex(COLUMN_ID);
+                @SuppressLint("Range") int columnIndex = cursor.getColumnIndex(COLUMN_ID);
                 if (columnIndex != -1) {
                     userId = cursor.getInt(columnIndex);
                 } else {
@@ -166,12 +193,34 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (SQLiteException e) {
-            e.printStackTrace();
+            Log.e("DBError", "Database error: " + e.getMessage());
         } finally {
             if (cursor != null) cursor.close();
             db.close();
         }
         return userId;
+    }
+
+    // Method to get the username by UserID
+    @SuppressLint("Range")
+    public String getUserNameById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String username = null;
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_USERS, new String[]{COLUMN_USERNAME},
+                    COLUMN_ID + " = ?",
+                    new String[]{String.valueOf(userId)}, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                username = cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME));
+            }
+        } catch (SQLiteException e) {
+            Log.e("DBError", "Database error: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+        return username;
     }
 
     private boolean isTableExists(SQLiteDatabase db, String tableName) {
@@ -191,19 +240,20 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private boolean isColumnExists(SQLiteDatabase db, String tableName, String columnName) {
-        Cursor cursor = db.rawQuery("PRAGMA table_info(" + tableName + ")", null);
-        if (cursor != null) {
-            try {
-                int nameIndex = cursor.getColumnIndex("name");
-                while (cursor.moveToNext()) {
-                    String name = cursor.getString(nameIndex);
-                    if (name != null && name.equals(columnName)) {
-                        return true;
-                    }
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+            int nameIndex = cursor.getColumnIndex("name");
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(nameIndex);
+                if (columnName.equals(name)) {
+                    return true;
                 }
-            } finally {
-                cursor.close();
             }
+        } catch (Exception e) {
+            Log.e("DBError", "Error checking column existence: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
         }
         return false;
     }

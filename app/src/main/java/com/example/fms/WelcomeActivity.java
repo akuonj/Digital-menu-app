@@ -4,42 +4,56 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-
-import com.example.fms.R;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class WelcomeActivity extends Activity {
+
+    private TextView welcomeTextView;
+    private Button startOrderButton;
+    private Button logoutButton;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        Spinner menuSpinner = findViewById(R.id.spinner_menu);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.menu_items, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        menuSpinner.setAdapter(adapter);
-        menuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Handle menu item selection
-                String selectedItem = parentView.getItemAtPosition(position).toString();
-                switch (selectedItem) {
-                    case "Yes":
-                        Intent makeOrderIntent = new Intent(WelcomeActivity.this, SelectMealActivity.class);
-                        startActivity(makeOrderIntent);
-                        break;
-                }
-            }
+        welcomeTextView = findViewById(R.id.textView);
+        startOrderButton = findViewById(R.id.buttonStartOrder);
+        logoutButton = findViewById(R.id.buttonLogout);
 
+        // Retrieve the username from the intent extras
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME");
+
+        // Display the username
+        if (username != null) {
+            welcomeTextView.setText("Welcome, " + username + "!");
+        } else {
+            welcomeTextView.setText("Welcome!");
+        }
+
+        // Set up button click listener for start order button
+        startOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing
+            public void onClick(View view) {
+                Intent makeOrderIntent = new Intent(WelcomeActivity.this, MealsActivity.class);
+                makeOrderIntent.putExtra("USERNAME", username); // Pass username to MealsActivity
+                startActivity(makeOrderIntent);
             }
         });
 
+        // Set up button click listener for logout button
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Clear the current activity stack and start the login activity
+                Intent logoutIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(logoutIntent);
+                finish();
+            }
+        });
     }
 }

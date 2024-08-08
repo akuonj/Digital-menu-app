@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/buttons"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvOrder"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="@drawable/buttons"
+        android:paddingTop="20dp"
+        android:text="PENDING ORDER"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/textViewOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Food Items selected:"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/mealFruitTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fruit: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/mealCerealTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cereal: "
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/mealStarchTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Starch: "
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/mealMeatTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Meat: "
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/mealSpreadsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Spreads: "
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/orderedBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Made by: "
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/orderedTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time-Ordered: "
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="26dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/previousButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttons"
+            android:text="Previous"
+            android:textColor="@color/white"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/markAsServedButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttons"
+            android:text="Mark as served"
+            android:textColor="@color/white"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttons"
+            android:text="Next"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

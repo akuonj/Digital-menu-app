@@ -5,12 +5,13 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/tv_breakfast_category"
+        android:id="@+id/tv_meal_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
         android:textStyle="bold"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:layout_marginEnd="8dp" /> <!-- Added margin for spacing -->
 
     <Spinner
         android:id="@+id/spinner_options"

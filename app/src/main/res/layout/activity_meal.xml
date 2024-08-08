@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/coffee">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvBreakfast"
@@ -12,7 +11,7 @@
         android:layout_height="97dp"
         android:background="@drawable/buttons"
         android:paddingTop="20dp"
-        android:text="BREAKFAST"
+        android:text="FOOD ITEMS"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textStyle="bold"

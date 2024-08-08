@@ -1,82 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login">
-
-
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="412dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/cardview_dark_background"
-        android:hint="Table name"
-        android:textColor="@color/white"
-        android:textColorHint="#BCAAA4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignIn" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="410dp"
-        android:layout_height="35dp"
-        android:layout_below="@id/editTextUsername"
-        android:layout_marginTop="9dp"
-        android:background="@color/cardview_dark_background"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:textColorHint="#BCAAA4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
-
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="142dp"
-        android:text="Login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
-
-    <Button
-        android:id="@+id/adMin"
-        android:layout_width="104dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="143dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginBottom="30dp"
-        android:text="Admin?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/login"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/tvSignIn"
-        android:layout_width="128dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="122dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="122dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Sign in"
         android:textAlignment="center"
         android:textColor="#039BE5"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
         tools:ignore="TextSizeCheck" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/cardview_dark_background"
+        android:hint="Table name"
+        android:textColor="@android:color/white"
+        android:textColorHint="#BCAAA4" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/cardview_dark_background"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:textColorHint="#BCAAA4" />
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginTop="26dp"
+        android:padding="8dp"
+        android:text="Login"
+        android:layout_gravity="center" />
+
+</LinearLayout>

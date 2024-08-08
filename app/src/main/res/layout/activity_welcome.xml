@@ -1,13 +1,13 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/myfood">
+    android:background="@drawable/myfood"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="417dp"
+        android:layout_width="match_parent"
         android:layout_height="105dp"
         android:background="@drawable/buttons"
         android:paddingLeft="5dp"
@@ -16,42 +16,30 @@
         android:text="DIGITAL MENU"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
-    <Spinner
-        android:id="@+id/spinner_menu"
-        android:layout_width="435dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="174dp"
+    <Button
+        android:id="@+id/buttonStartOrder"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/buttons"
-        android:gravity="center"
-        android:textAlignment="center"
+        android:text="Start Order"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:layout_above="@+id/buttonLogout"
+        android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="264dp"
-        android:layout_height="178dp"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="193dp"
-        android:layout_marginEnd="74dp"
-        android:text="🌟 Welcome to OMAN HOTEL! 🌟 Discover the world of OMAN FOOD and tantalize your taste buds with our exquisite selection of dishes from Oman. Let your culinary journey begin! Click the button below to explore and indulge."
-        android:textAlignment="center"
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:background="@drawable/buttons"
+        android:text="Logout"
         android:textColor="@color/white"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
