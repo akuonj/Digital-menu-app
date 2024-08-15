@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,13 +16,20 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class PendingMealsOrderActivity extends AppCompatActivity {
+    // TextView elements to display food items and prices
     private TextView mealFruitTextView;
+    private TextView mealFruitPriceTextView;
     private TextView mealCerealTextView;
+    private TextView mealCerealPriceTextView;
     private TextView mealStarchTextView;
+    private TextView mealStarchPriceTextView;
     private TextView mealMeatTextView;
+    private TextView mealMeatPriceTextView;
     private TextView mealSpreadsTextView;
+    private TextView mealSpreadsPriceTextView;
     private TextView orderedByTextView;
     private TextView orderedTimeTextView;
+    private TextView totalPriceTextView;
 
     private Button previousButton;
     private Button markAsServedButton;
@@ -39,14 +44,22 @@ public class PendingMealsOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_meal_orders);
 
+        // Initialize TextView elements
         mealFruitTextView = findViewById(R.id.mealFruitTextView);
+        mealFruitPriceTextView = findViewById(R.id.mealFruitPriceTextView);
         mealCerealTextView = findViewById(R.id.mealCerealTextView);
+        mealCerealPriceTextView = findViewById(R.id.mealCerealPriceTextView);
         mealStarchTextView = findViewById(R.id.mealStarchTextView);
+        mealStarchPriceTextView = findViewById(R.id.mealStarchPriceTextView);
         mealMeatTextView = findViewById(R.id.mealMeatTextView);
+        mealMeatPriceTextView = findViewById(R.id.mealMeatPriceTextView);
         mealSpreadsTextView = findViewById(R.id.mealSpreadsTextView);
+        mealSpreadsPriceTextView = findViewById(R.id.mealSpreadsPriceTextView);
         orderedByTextView = findViewById(R.id.orderedBy);
         orderedTimeTextView = findViewById(R.id.orderedTime);
+        totalPriceTextView = findViewById(R.id.totalPriceTextView);
 
+        // Initialize Buttons
         previousButton = findViewById(R.id.previousButton);
         markAsServedButton = findViewById(R.id.markAsServedButton);
         nextButton = findViewById(R.id.nextButton);
@@ -56,43 +69,37 @@ public class PendingMealsOrderActivity extends AppCompatActivity {
 
         showDataForCurrentIndex();
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentIndex > 0) {
+        // Set OnClickListener for previous button
+        previousButton.setOnClickListener(v -> {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showDataForCurrentIndex();
+            } else {
+                Toast.makeText(PendingMealsOrderActivity.this, "No previous orders", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Set OnClickListener for mark as served button
+        markAsServedButton.setOnClickListener(v -> {
+            if (mealOrderIds.size() > 0) {
+                markCurrentOrderAsServed();
+                mealOrderIds.remove(currentIndex);
+                if (currentIndex >= mealOrderIds.size() && currentIndex > 0) {
                     currentIndex--;
-                    showDataForCurrentIndex();
-                } else {
-                    Toast.makeText(PendingMealsOrderActivity.this, "No previous orders", Toast.LENGTH_SHORT).show();
                 }
+                showDataForCurrentIndex();
+            } else {
+                Toast.makeText(PendingMealsOrderActivity.this, "No orders to mark as served", Toast.LENGTH_SHORT).show();
             }
         });
 
-        markAsServedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mealOrderIds.size() > 0) {
-                    markCurrentOrderAsServed();
-                    mealOrderIds.remove(currentIndex);
-                    if (currentIndex >= mealOrderIds.size() && currentIndex > 0) {
-                        currentIndex--;
-                    }
-                    showDataForCurrentIndex();
-                } else {
-                    Toast.makeText(PendingMealsOrderActivity.this, "No orders to mark as served", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentIndex < mealOrderIds.size() - 1) {
-                    currentIndex++;
-                    showDataForCurrentIndex();
-                } else {
-                    Toast.makeText(PendingMealsOrderActivity.this, "No more orders", Toast.LENGTH_SHORT).show();
-                }
+        // Set OnClickListener for next button
+        nextButton.setOnClickListener(v -> {
+            if (currentIndex < mealOrderIds.size() - 1) {
+                currentIndex++;
+                showDataForCurrentIndex();
+            } else {
+                Toast.makeText(PendingMealsOrderActivity.this, "No more orders", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -100,13 +107,12 @@ public class PendingMealsOrderActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private ArrayList<Integer> getAllMealOrderIds() {
         ArrayList<Integer> ids = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("Meals", new String[]{"MealID"}, null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            ids.add(cursor.getInt(cursor.getColumnIndex("MealID")));
+        try (SQLiteDatabase db = dbHelper.getReadableDatabase();
+             Cursor cursor = db.query("Meals", new String[]{"MealID"}, null, null, null, null, null)) {
+            while (cursor.moveToNext()) {
+                ids.add(cursor.getInt(cursor.getColumnIndex("MealID")));
+            }
         }
-        cursor.close();
-        db.close();
         return ids;
     }
 
@@ -114,34 +120,52 @@ public class PendingMealsOrderActivity extends AppCompatActivity {
     private void showDataForCurrentIndex() {
         if (mealOrderIds.size() > 0) {
             int mealId = mealOrderIds.get(currentIndex);
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor cursor = db.query("Meals", null, "MealID = ?", new String[]{String.valueOf(mealId)}, null, null, null);
-            if (cursor.moveToFirst()) {
-                logCursorColumns(cursor);
+            try (SQLiteDatabase db = dbHelper.getReadableDatabase();
+                 Cursor cursor = db.query("Meals", null, "MealID = ?", new String[]{String.valueOf(mealId)}, null, null, null)) {
+                if (cursor.moveToFirst()) {
+                    // Display food items
+                    mealFruitTextView.setText("Fruit: " + cursor.getString(cursor.getColumnIndex("Fruit")));
+                    mealCerealTextView.setText("Cereal: " + cursor.getString(cursor.getColumnIndex("Cereal")));
+                    mealStarchTextView.setText("Starch: " + cursor.getString(cursor.getColumnIndex("Starch")));
+                    mealMeatTextView.setText("Meat: " + cursor.getString(cursor.getColumnIndex("Meat")));
+                    mealSpreadsTextView.setText("Spreads: " + cursor.getString(cursor.getColumnIndex("Spreads")));
 
-                mealFruitTextView.setText("Fruit: " + cursor.getString(cursor.getColumnIndex("Fruit")));
-                mealCerealTextView.setText("Cereal: " + cursor.getString(cursor.getColumnIndex("Cereal")));
-                mealStarchTextView.setText("Starch: " + cursor.getString(cursor.getColumnIndex("Starch")));
-                mealMeatTextView.setText("Meat: " + cursor.getString(cursor.getColumnIndex("Meat")));
-                mealSpreadsTextView.setText("Spreads: " + cursor.getString(cursor.getColumnIndex("Spreads")));
+                    // Display prices
+                    double fruitPrice = cursor.getDouble(cursor.getColumnIndex("FruitPrice"));
+                    double cerealPrice = cursor.getDouble(cursor.getColumnIndex("CerealPrice"));
+                    double starchPrice = cursor.getDouble(cursor.getColumnIndex("StarchPrice"));
+                    double meatPrice = cursor.getDouble(cursor.getColumnIndex("MeatPrice"));
+                    double spreadsPrice = cursor.getDouble(cursor.getColumnIndex("SpreadsPrice"));
 
-                int userId = cursor.getInt(cursor.getColumnIndex("OrderedBy"));
-                String orderedBy = dbHelper.getUserNameById(userId);
-                orderedByTextView.setText("Made by: " + (orderedBy != null ? orderedBy : "Unknown"));
+                    mealFruitPriceTextView.setText(String.format("$%.2f", fruitPrice));
+                    mealCerealPriceTextView.setText(String.format("$%.2f", cerealPrice));
+                    mealStarchPriceTextView.setText(String.format("$%.2f", starchPrice));
+                    mealMeatPriceTextView.setText(String.format("$%.2f", meatPrice));
+                    mealSpreadsPriceTextView.setText(String.format("$%.2f", spreadsPrice));
 
-                String timeOrdered = cursor.getString(cursor.getColumnIndex("TimeOrdered"));
-                orderedTimeTextView.setText("Time-Ordered: " + timeOrdered);
+                    double totalPrice = fruitPrice + cerealPrice + starchPrice + meatPrice + spreadsPrice;
+                    totalPriceTextView.setText(String.format("Total Price: $%.2f", totalPrice));
+
+                    // Display order details
+                    orderedByTextView.setText("Made by: " + dbHelper.getUserNameById(cursor.getInt(cursor.getColumnIndex("OrderedBy"))));
+                    orderedTimeTextView.setText("Time-Ordered: " + cursor.getString(cursor.getColumnIndex("TimeOrdered")));
+                }
             }
-            cursor.close();
-            db.close();
         } else {
+            // Clear the text views if no data is available
             mealFruitTextView.setText("Fruit: ");
+            mealFruitPriceTextView.setText("Price: ");
             mealCerealTextView.setText("Cereal: ");
+            mealCerealPriceTextView.setText("Price: ");
             mealStarchTextView.setText("Starch: ");
+            mealStarchPriceTextView.setText("Price: ");
             mealMeatTextView.setText("Meat: ");
+            mealMeatPriceTextView.setText("Price: ");
             mealSpreadsTextView.setText("Spreads: ");
+            mealSpreadsPriceTextView.setText("Price: ");
             orderedByTextView.setText("Made by: ");
             orderedTimeTextView.setText("Time-Ordered: ");
+            totalPriceTextView.setText("Total Price: ");
         }
     }
 
@@ -151,30 +175,38 @@ public class PendingMealsOrderActivity extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
+    @SuppressLint("Range")
     private void markCurrentOrderAsServed() {
         if (mealOrderIds.size() > 0) {
             int mealId = mealOrderIds.get(currentIndex);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            try {
-                String currentTime = getCurrentTime(); // Get current time for served time
-                db.execSQL("INSERT INTO ServedOrders (UserID, Fruit, Cereal, Starch, Meat, Spreads, OrderedBy, OrderedTime, ServedTime) " +
-                                "SELECT UserID, Fruit, Cereal, Starch, Meat, Spreads, OrderedBy, TimeOrdered, ? FROM Meals WHERE MealID = ?",
-                        new Object[]{currentTime, mealId});
-                db.delete("Meals", "MealID = ?", new String[]{String.valueOf(mealId)});
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Failed to mark order as served", Toast.LENGTH_SHORT).show();
-            } finally {
-                db.close();
-            }
-        }
-    }
+            try (SQLiteDatabase db = dbHelper.getWritableDatabase();
+                 Cursor cursor = db.rawQuery("SELECT UserID, Fruit, FruitPrice, Cereal, CerealPrice, Starch, StarchPrice, Meat, MeatPrice, Spreads, SpreadsPrice, OrderedBy, TimeOrdered " +
+                         "FROM Meals WHERE MealID = ?", new String[]{String.valueOf(mealId)})) {
 
-    private void logCursorColumns(Cursor cursor) {
-        String[] columnNames = cursor.getColumnNames();
-        for (String columnName : columnNames) {
-            int columnIndex = cursor.getColumnIndex(columnName);
-            Log.d("CursorColumn", "Column: " + columnName + " Index: " + columnIndex);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int userId = cursor.getInt(cursor.getColumnIndex("UserID"));
+                    String fruit = cursor.getString(cursor.getColumnIndex("Fruit"));
+                    double fruitPrice = cursor.getDouble(cursor.getColumnIndex("FruitPrice"));
+                    String cereal = cursor.getString(cursor.getColumnIndex("Cereal"));
+                    double cerealPrice = cursor.getDouble(cursor.getColumnIndex("CerealPrice"));
+                    String starch = cursor.getString(cursor.getColumnIndex("Starch"));
+                    double starchPrice = cursor.getDouble(cursor.getColumnIndex("StarchPrice"));
+                    String meat = cursor.getString(cursor.getColumnIndex("Meat"));
+                    double meatPrice = cursor.getDouble(cursor.getColumnIndex("MeatPrice"));
+                    String spreads = cursor.getString(cursor.getColumnIndex("Spreads"));
+                    double spreadsPrice = cursor.getDouble(cursor.getColumnIndex("SpreadsPrice"));
+                    String orderedBy = cursor.getString(cursor.getColumnIndex("OrderedBy"));
+                    String timeOrdered = cursor.getString(cursor.getColumnIndex("TimeOrdered"));
+
+                    // Insert the served meal into the ServedMeals table
+                    db.execSQL("INSERT INTO ServedOrders (UserID, Fruit, FruitPrice, Cereal, CerealPrice, Starch, StarchPrice, Meat, MeatPrice, Spreads, SpreadsPrice, OrderedBy, OrderedTime, ServedTime) " +
+                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                            new Object[]{userId, fruit, fruitPrice, cereal, cerealPrice, starch, starchPrice, meat, meatPrice, spreads, spreadsPrice, orderedBy, timeOrdered, getCurrentTime()});
+
+                    // Delete the meal from the Meals table
+                    db.execSQL("DELETE FROM Meals WHERE MealID = ?", new String[]{String.valueOf(mealId)});
+                }
+            }
         }
     }
 }

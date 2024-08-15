@@ -10,10 +10,10 @@ public class MealstItem {
         this.category = category;
         this.selectedOption = selectedOption;
         this.options = options;
-        this.selectedIndex = findIndex(selectedOption);
+        this.selectedIndex = getIndexOfOption(selectedOption);
     }
 
-    private int findIndex(String option) {
+    private int getIndexOfOption(String option) {
         for (int i = 0; i < options.length; i++) {
             if (options[i].equals(option)) {
                 return i;
@@ -36,7 +36,7 @@ public class MealstItem {
 
     public void setSelectedOption(String selectedOption) {
         this.selectedOption = selectedOption;
-        this.selectedIndex = findIndex(selectedOption);
+        this.selectedIndex = getIndexOfOption(selectedOption);
     }
 
     public int getSelectedIndex() {
@@ -44,6 +44,9 @@ public class MealstItem {
     }
 
     public void setSelectedIndex(int selectedIndex) {
-        this.selectedIndex = selectedIndex;
+        if (selectedIndex >= 0 && selectedIndex < options.length) {
+            this.selectedIndex = selectedIndex;
+            this.selectedOption = options[selectedIndex];
+        }
     }
 }

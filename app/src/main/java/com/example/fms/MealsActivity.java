@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,12 +28,18 @@ public class MealsActivity extends Activity {
     private DMDatabaseHelper dbHelper;
     private int userId;
     private String username;
+    private TextView tvTotalPrice;
 
     private String[] fruitOptions = {"Pineapple", "Melon"};
+    private double[] fruitPrices = {1.5, 2.0}; // Prices for fruits
     private String[] cerealsOptions = {"Wimbi Porridge", "Oatmeal Porridge", "Weetabix", "Cornflakes"};
+    private double[] cerealPrices = {3.0, 3.5, 4.0, 2.5}; // Prices for cereals
     private String[] starchOptions = {"Home Made Muesli", "White Bread Plain", "White Bread Toasted", "Brown Bread Plain", "Brown Bread Toasted"};
+    private double[] starchPrices = {5.0, 1.5, 1.8, 1.6, 1.9}; // Prices for starch
     private String[] meatOptions = {"Chicken Sausage"};
+    private double[] meatPrices = {3.5}; // Prices for meat
     private String[] spreadsOptions = {"Butter", "Marmalade", "Jam"};
+    private double[] spreadsPrices = {0.5, 0.7, 0.8}; // Prices for spreads
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,6 @@ public class MealsActivity extends Activity {
         mealsRecyclerView = findViewById(R.id.breakfast_recycler_view);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize the meal items list
         mealItems = new ArrayList<>();
         mealItems.add(new MealstItem("Fruit", fruitOptions[0], fruitOptions));
         mealItems.add(new MealstItem("Cereal", cerealsOptions[0], cerealsOptions));
@@ -61,63 +67,104 @@ public class MealsActivity extends Activity {
             userId = dbHelper.getUserId(username);
             if (userId == -1) {
                 Toast.makeText(MealsActivity.this, "User not found", Toast.LENGTH_SHORT).show();
-                finish(); // Exit the activity if userId is -1
                 return;
             }
-        } else {
-            Toast.makeText(MealsActivity.this, "Username is not provided", Toast.LENGTH_SHORT).show();
-            finish(); // Exit the activity if username is null
-            return;
         }
+
+        // listener to update total price
+        mealsAdapter.setOnItemSelectedListener(new MealsAdapter.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected() {
+                calculateTotalPrice();
+            }
+        });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String selectedFruit = mealItems.get(0).getSelectedOption();
-                String selectedCereal = mealItems.get(1).getSelectedOption();
-                String selectedStarch = mealItems.get(2).getSelectedOption();
-                String selectedMeat = mealItems.get(3).getSelectedOption();
-                String selectedSpreads = mealItems.get(4).getSelectedOption();
-
-                if (selectedFruit.isEmpty() || selectedCereal.isEmpty() || selectedStarch.isEmpty() || selectedMeat.isEmpty() || selectedSpreads.isEmpty()) {
-                    Toast.makeText(MealsActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                SQLiteDatabase db = null;
-                try {
-                    db = dbHelper.getWritableDatabase();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    sdf.setTimeZone(TimeZone.getTimeZone("Africa/Nairobi"));
-                    String currentTime = sdf.format(new Date());
-
-                    ContentValues values = new ContentValues();
-                    values.put("Fruit", selectedFruit);
-                    values.put("Cereal", selectedCereal);
-                    values.put("Starch", selectedStarch);
-                    values.put("Meat", selectedMeat);
-                    values.put("Spreads", selectedSpreads);
-                    values.put("OrderedBy", userId);
-                    values.put("TimeOrdered", currentTime);
-
-                    long newRowId = db.insert("Meals", null, values);
-                    if (newRowId != -1) {
-                        Toast.makeText(MealsActivity.this, "Order made successfully!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(MealsActivity.this, "Failed to make an order.", Toast.LENGTH_LONG).show();
-                    }
-                } catch (SQLiteException e) {
-                    Toast.makeText(MealsActivity.this, "Database error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                } finally {
-                    if (db != null) {
-                        db.close();
-                    }
-                }
-
-                Intent intent = new Intent(MealsActivity.this, WaitActivity.class);
-                intent.putExtra("USERNAME", username); // Pass username to WaitActivity
-                startActivity(intent);
+            public void onClick(View view) {
+                saveMealOrder();
             }
         });
+
+        // Initial total price calculation
+        calculateTotalPrice();
+    }
+
+    private void calculateTotalPrice() {
+        double totalPrice = 0.0;
+
+        for (MealstItem item : mealItems) {
+            String category = item.getCategory();
+            int selectedIndex = item.getSelectedIndex();
+
+            switch (category) {
+                case "Fruit":
+                    totalPrice += fruitPrices[selectedIndex];
+                    break;
+                case "Cereal":
+                    totalPrice += cerealPrices[selectedIndex];
+                    break;
+                case "Starch":
+                    totalPrice += starchPrices[selectedIndex];
+                    break;
+                case "Meat":
+                    totalPrice += meatPrices[selectedIndex];
+                    break;
+                case "Spreads":
+                    totalPrice += spreadsPrices[selectedIndex];
+                    break;
+            }
+        }
+
+        TextView totalPriceTextView = findViewById(R.id.tvTotalPrice);
+        totalPriceTextView.setText(String.format("Total: $%.2f", totalPrice));
+    }
+
+    private void saveMealOrder() {
+        MealstItem selectedFruit = mealItems.get(0);
+        MealstItem selectedCereal = mealItems.get(1);
+        MealstItem selectedStarch = mealItems.get(2);
+        MealstItem selectedMeat = mealItems.get(3);
+        MealstItem selectedSpreads = mealItems.get(4);
+
+        SQLiteDatabase db = null;
+
+        try {
+            db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("UserID", userId);
+            values.put("Fruit", selectedFruit.getSelectedOption());
+            values.put("FruitPrice", fruitPrices[selectedFruit.getSelectedIndex()]); // Use getSelectedIndex()
+            values.put("Cereal", selectedCereal.getSelectedOption());
+            values.put("CerealPrice", cerealPrices[selectedCereal.getSelectedIndex()]); // Use getSelectedIndex()
+            values.put("Starch", selectedStarch.getSelectedOption());
+            values.put("StarchPrice", starchPrices[selectedStarch.getSelectedIndex()]); // Use getSelectedIndex()
+            values.put("Meat", selectedMeat.getSelectedOption());
+            values.put("MeatPrice", meatPrices[selectedMeat.getSelectedIndex()]); // Use getSelectedIndex()
+            values.put("Spreads", selectedSpreads.getSelectedOption());
+            values.put("SpreadsPrice", spreadsPrices[selectedSpreads.getSelectedIndex()]); // Use getSelectedIndex()
+            values.put("OrderedBy", userId);
+            values.put("TimeOrdered", getCurrentTime());
+
+            long newRowId = db.insert("Meals", null, values);
+            if (newRowId != -1) {
+                Toast.makeText(MealsActivity.this, "Order made successfully!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MealsActivity.this, WaitActivity.class).putExtra("USERNAME", username));
+            } else {
+                Toast.makeText(MealsActivity.this, "Failed to make order.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (SQLiteException e) {
+            Toast.makeText(MealsActivity.this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+    }
+
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getDefault());
+        return sdf.format(new Date());
     }
 }

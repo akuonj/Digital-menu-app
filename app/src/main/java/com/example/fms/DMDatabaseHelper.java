@@ -17,17 +17,14 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class DMDatabaseHelper extends SQLiteOpenHelper {
-    // Database and table names
     private static final String DATABASE_NAME = "Hospital.db";
-    private static final int DATABASE_VERSION = 6; // Incremented version
+    private static final int DATABASE_VERSION = 7; // Incremented version
 
-    // Users table and columns
     private static final String TABLE_USERS = "Users";
     private static final String COLUMN_ID = "UserID";
     public static final String COLUMN_USERNAME = "Username";
     private static final String COLUMN_PASSWORD = "Password";
 
-    // Meals table
     private static final String TABLE_MEALS = "Meals";
     private static final String TABLE_SERVED_ORDERS = "ServedOrders";
 
@@ -37,7 +34,6 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create tables
         createUsersTable(db);
         createMealsTable(db);
         createServedOrdersTable(db);
@@ -46,17 +42,40 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
-            if (oldVersion < 6) {
+            if (oldVersion < 7) {
+                if (isTableExists(db, TABLE_MEALS)) {
+                    if (!isColumnExists(db, TABLE_MEALS, "FruitPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_MEALS + " ADD COLUMN FruitPrice REAL;");
+                    }
+                    if (!isColumnExists(db, TABLE_MEALS, "CerealPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_MEALS + " ADD COLUMN CerealPrice REAL;");
+                    }
+                    if (!isColumnExists(db, TABLE_MEALS, "StarchPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_MEALS + " ADD COLUMN StarchPrice REAL;");
+                    }
+                    if (!isColumnExists(db, TABLE_MEALS, "MeatPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_MEALS + " ADD COLUMN MeatPrice REAL;");
+                    }
+                    if (!isColumnExists(db, TABLE_MEALS, "SpreadsPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_MEALS + " ADD COLUMN SpreadsPrice REAL;");
+                    }
+                }
+
                 if (isTableExists(db, TABLE_SERVED_ORDERS)) {
-                    // Add columns if they don't exist
-                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "OrderedBy")) {
-                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN OrderedBy INTEGER;");
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "FruitPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN FruitPrice REAL;");
                     }
-                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "OrderedTime")) {
-                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN OrderedTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP;");
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "CerealPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN CerealPrice REAL;");
                     }
-                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "ServedTime")) {
-                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN ServedTime TIMESTAMP;");
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "StarchPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN StarchPrice REAL;");
+                    }
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "MeatPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN MeatPrice REAL;");
+                    }
+                    if (!isColumnExists(db, TABLE_SERVED_ORDERS, "SpreadsPrice")) {
+                        db.execSQL("ALTER TABLE " + TABLE_SERVED_ORDERS + " ADD COLUMN SpreadsPrice REAL;");
                     }
                 }
             }
@@ -78,10 +97,15 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
                 "MealID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Fruit TEXT, " +
+                "FruitPrice REAL, " +
                 "Cereal TEXT, " +
+                "CerealPrice REAL, " +
                 "Starch TEXT, " +
+                "StarchPrice REAL, " +
                 "Meat TEXT, " +
+                "MeatPrice REAL, " +
                 "Spreads TEXT, " +
+                "SpreadsPrice REAL, " +
                 "OrderedBy INTEGER, " +
                 "TimeOrdered TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                 "FOREIGN KEY(UserID) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "), " +
@@ -89,15 +113,20 @@ public class DMDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTableSQL);
     }
 
-    private void createServedOrdersTable(SQLiteDatabase db) {
+    public void createServedOrdersTable(SQLiteDatabase db) {
         String createTableSQL = "CREATE TABLE " + TABLE_SERVED_ORDERS + " (" +
                 "ServedOrderID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "UserID INTEGER, " +
                 "Fruit TEXT, " +
+                "FruitPrice REAL, " +
                 "Cereal TEXT, " +
+                "CerealPrice REAL, " +
                 "Starch TEXT, " +
+                "StarchPrice REAL, " +
                 "Meat TEXT, " +
+                "MeatPrice REAL, " +
                 "Spreads TEXT, " +
+                "SpreadsPrice REAL, " +
                 "OrderedBy INTEGER, " +
                 "OrderedTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                 "ServedTime TIMESTAMP, " +
